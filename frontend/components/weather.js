@@ -1,25 +1,22 @@
 import { LitElement, html, css } from 'lit';
 
 class Weather extends LitElement {
-  static styles = css`
-    :host {
-      display: block;
-      padding: 16px;
-      color: var(--weather-text-color, black);
-    }
-  `;
-
   static properties = {
-    message: { type: String },
-  };
+    city: { type: String },
+    temperature: { type: Number },
+    weatherDescription: { type: String }
+};
 
   constructor() {
     super();
-    this.message = 'weather app incoming!';
+    this.city = 'Dallas';
+    this.temperature = null;
+    this.weatherDescription = '';
   }
 
   connectedCallback() {
     super.connectedCallback();
+    this.fetchWeather();
     fetch('/api/message')
       .then((response) => response.json())
       .then((data) => {
@@ -27,8 +24,23 @@ class Weather extends LitElement {
       });
   }
 
+  async fetchWeather() {
+    console.log('Fetching weather data...');
+    const response = await fetch(`/api/weather?city=${this.city}`);
+    const data = await response.json();
+    console.log('Data received:', data); // Log the received data
+    this.temperature = data.temperature;
+    this.weatherDescription = data.weatherDescription;
+  }
+
   render() {
-    return html`<p>${this.message}</p>`;
+    return html`
+    <div>
+      <h1>Weather in ${this.city}</h1>
+      <p>Temperature: ${this.temperature}°C</p>
+      <p>Condition: ${this.weatherDescription}</p>
+    </div>
+  `;
   }
 }
 

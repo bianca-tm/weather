@@ -7,13 +7,14 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 // what port localhost will be going to
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
+const HOST = process.env.HOST || '0.0.0.0';
 
 // link to the frontend
 app.use(express.static(path.join(__dirname, '../frontend')));
 
 app.get('/api/message', (req, res) => {
-    res.json({ message: 'Hello from the backend!' });
+    res.json({ message: 'Hello from the backend! :) ' });
 });
 
 app.get('/api/weather', async (req, res) => {
@@ -41,6 +42,6 @@ app.get('/api/weather', async (req, res) => {
     }
   });
 
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+app.listen(PORT, HOST, () => {
+    console.log(`Server is running on http://${HOST}:${PORT}`);
 });

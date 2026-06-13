@@ -2,6 +2,15 @@
 
 A simple weather app with a Node.js backend and a Lit-based frontend.
 
+
+
+## TODO
+
+1. Make mocks of how I want the frontend to look
+2. Implement FE ideas
+3. Create unit tests
+4. Change API to the National Weather Service
+
 ## Run locally
 
 The frontend is served by the backend, so the main app is started from the backend. The frontend itself does not need a separate server for normal use.

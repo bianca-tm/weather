@@ -1,27 +1,16 @@
 # weather
 
-A simple weather app with a Node.js backend and a Lit-based frontend.
-
-
-
-## TODO
-
-1. Make mocks of how I want the frontend to look
-2. Implement FE ideas
-3. Create unit tests
-4. Change API to the National Weather Service
+A simple weather dashboard with a Node.js backend and a polished frontend experience.
 
 ## Run locally
 
-The frontend is served by the backend, so the main app is started from the backend. The frontend itself does not need a separate server for normal use.
+The app is served by the backend at port 3000. You can start the backend and preview the frontend from the same URL, or run the frontend files separately with a simple static server.
 
 ### 1. Prerequisites
 
 Install Node.js and npm from https://nodejs.org/.
 
-You will also need a Weatherstack API key:
-- Create an account at https://weatherstack.com/
-- Copy your API key
+The backend uses the National Weather Service API directly, so no API key is required.
 
 ### 2. Install dependencies
 
@@ -40,33 +29,57 @@ npm install
 Create a file named `.env` inside the backend folder:
 
 ```env
-WEATHERSTACK_API_KEY=your_api_key_here
 HOST=0.0.0.0
 PORT=3000
+NWS_USER_AGENT=binkr-weather
 ```
 
-### 4. Start the app
+### 4. Start the backend
 
-Start the backend:
+Open one terminal and run:
 
 ```bash
 cd backend
-npm run start
+npm start
 ```
 
-This starts the server and serves the frontend at:
+This starts the API server and serves the frontend at:
 
 ```text
 http://localhost:3000
 ```
 
-### 5. Open it in a browser
+### 5. Start the frontend separately (optional)
 
-- Frontend: open http://localhost:3000
-- Backend API: open http://localhost:3000/api/message
-- From another device on the same network: open http://<your-computer-ip>:3000
+If you want to preview the frontend files on their own, open a second terminal and run:
 
-If you want to preview just the frontend files without the backend, you can also open [frontend/index.html](frontend/index.html) directly in a browser, but the weather data API will not work unless the backend is running.
+```bash
+cd frontend
+python -m http.server 8080
+```
+
+Then open:
+
+```text
+http://localhost:8080
+```
+
+> The frontend can work as a static preview, but the weather data will only load if the backend is also running.
+
+### 6. Open it in a browser
+
+- Main app: http://localhost:3000
+- Frontend preview: http://localhost:8080
+- Backend API health check: http://localhost:3000/api/message
+- Current weather for Dallas, Texas: http://localhost:3000/api/weather/current?city=Dallas&state=Texas
+- 10-hour forecast for Dallas, Texas: http://localhost:3000/api/weather/forecast?city=Dallas&state=Texas
+
+### 7. Access for others
+
+If you want other people on the same network to view the frontend:
+- Make sure port 3000 (or 8080 for the separate frontend preview) is allowed through your firewall
+- Use your computer’s local IP address instead of localhost
+- If needed, temporarily disable any VPN that may block local network access
 
 To find your local IP address on Windows, run:
 
@@ -76,15 +89,19 @@ ipconfig
 
 Look for the IPv4 address under your active network adapter.
 
-### 6. Access for others
+### 8. Stop the server
 
-If you want other people on the same network to view the frontend:
-- Make sure port 3000 is allowed through your firewall
-- Use your computer’s local IP address instead of localhost
-- If needed, temporarily disable any VPN that may block local network access
+Press Ctrl+C in each terminal that is running a local server.
 
-### 7. Stop the server
+## Next ideas
 
-Press Ctrl+C in the terminal running the server.
+- Add a more detailed forecast card layout
+- Include icons and animated weather states
+- Add a dark mode toggle
+
+
+
+## Bugs
+- still can view places that arent real
 
 
